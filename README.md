@@ -1,46 +1,29 @@
-## Metacrafters Project
-This repository contains the source code for the MyContract smart contract. The contract is written in Solidity version 0.8.0 and implements the withdraw function with require, assert, and revert statements, along with the getContractBalance function.
+## React Crypto ATM
+This is a simple React component for a Crypto ATM application. It allows users to connect their MetaMask wallet, view their account balance, deposit and withdraw ETH, check the owner's name and a simple calculator with limited operations.
 
-## Prerequisites
-Before running the smart contract, make sure you have the following prerequisites installed:
+## Features
+The Crypto ATM component provides the following features:
 
-* Solidity compiler (version 0.8.0)
-* Ethereum development environment (e.g., Remix, Truffle, Hardhat)
-## Getting Started
-* Follow the steps below to get started with the MyContract smart contract:
+* Connect to MetaMask wallet
+* Display user's account address
+* View user's account balance
+* Deposit ETH into the ATM
+* Withdraw ETH from the ATM
+* Check the owner's name
+* add two values
+* subtract two values
+* multiply two values
+Please note that the component assumes you have set up and configured MetaMask in your browser.
 
-* Clone this repository to your local machine.
-* Open the project in your preferred Ethereum development environment.
-* Compile the smart contract using the Solidity compiler.
-* Deploy the contract to your preferred Ethereum network.
-* Interact with the contract using the provided functions.
-## Contract Details
-### Description
-The MyContract contract allows the contract owner to withdraw funds from the contract balance. The contract owner is set during the contract deployment.
+## Customization
+You can customize the UI elements, styles, and behavior of the Crypto ATM component according to your project's requirements. Modify the JSX structure, CSS styles, and event handlers to align with your application's design and functionality.
 
-### Functions
-#### constructor()
-The constructor function is executed once during contract deployment. It sets the contract owner to the address of the message sender.
+## Setup
+After cloning the github, you will want to do the following to get the code running on your computer.
 
-### withdraw(uint amount)
-The withdraw function allows the contract owner to withdraw a specified amount of funds from the contract balance. It includes several checks using require statements to ensure the withdrawal conditions are met:
-
-* The amount must be greater than zero.
-* The contract balance must be equal to or greater than the requested amount.
-If the require conditions are satisfied, the function attempts to transfer the funds to the message sender using the call function. The assert statement checks if the transfer was successful. If the transfer fails, the function reverts with an error message using the revert statement.
-
-### getContractBalance()
-The getContractBalance function is a view function that returns the current balance of the contract.
-
-## Usage
-To use the MyContract smart contract, follow these steps:
-
-* Deploy the contract by calling the constructor function.
-* As the contract owner, call the withdraw function and provide the amount to withdraw.
-* Verify that the withdrawal conditions are satisfied and the transfer is successful.
-* To check the current balance of the contract, call the getContractBalance function.
-## License
-This project is licensed under the MIT License. See the LICENCE file for details.
-
-## Credits
-This project is a solution to the project task provided by MetaCrafters.
+* Inside the project directory, in the terminal type: npm i
+* Open two additional terminals in your VS code
+* In the second terminal type: npx hardhat node
+* In the third terminal, type: npx hardhat run --network localhost scripts/deploy.js
+* Back in the first terminal, type npm run dev to launch the front-end.
+After this, the project will be running on your localhost. Typically at http://localhost:3000/
