@@ -14,9 +14,7 @@ export default function HomePage() {
   const [inputA, setInputA] = useState("");
   const [inputB, setInputB] = useState("");
 
-  
-  const contractAddress = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
-
+  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
   const atmABI = atm_abi.abi;
 
   const getWallet = async() => {
@@ -24,12 +22,12 @@ export default function HomePage() {
       setEthWallet(window.ethereum);
       window.ethereum.on("accountsChanged", (accounts) => {
         handleAccount(accounts);
-      });
-    }
-
+      
+    });
+  }
     if (ethWallet) {
-      const accounts = await ethWallet.request({method: "eth_accounts"});
-      handleAccount(accounts);
+      const account = await ethWallet.request({method: "eth_accounts"});
+      handleAccount(account);
     }
   }
 
@@ -60,7 +58,7 @@ export default function HomePage() {
     const provider = new ethers.providers.Web3Provider(ethWallet);
     const signer = provider.getSigner();
     const atmContract = new ethers.Contract(contractAddress, atmABI, signer);
-
+ 
     setATM(atmContract);
   }
 
@@ -88,42 +86,40 @@ export default function HomePage() {
   const checkOwner = async () => {
     if (atm) {
       let owner = await atm.checkOwner();
-      setOwnerName("Moshahid Raza");
+      setOwnerName("Sudhanshu Ranjan");
     }
   }
   const addition = async () => {
-      if (atm) {
-        const a = parseInt(inputA);
-        const b = parseInt(inputB);
-        const answer = await atm.addition(a,b);
-        setAdd(answer);
-      }
-  }  
-  const subtraction = async () => {
     if (atm) {
       const a = parseInt(inputA);
       const b = parseInt(inputB);
-      const answer = await atm.substraction(a,b);
-      setSub(answer);
+      const answer = await atm.addition(a,b);
+      setAdd(answer);
     }
+}  
+const subtraction = async () => {
+  if (atm) {
+    const a = parseInt(inputA);
+    const b = parseInt(inputB);
+    const answer = await atm.substraction(a,b);
+    setSub(answer);
   }
-  const multiplication = async () => {
-    if (atm) {
-      const a = parseInt(inputA);
-      const b = parseInt(inputB);
-      const answer = await atm.multiplication(a,b);
-      setMult(answer);
-    }
+}
+const multiplication = async () => {
+  if (atm) {
+    const a = parseInt(inputA);
+    const b = parseInt(inputB);
+    const answer = await atm.multiplication(a,b);
+    setMult(answer);
   }
-  const handleInputAChange = (event) => {
-    setInputA(event.target.value);
-  };
+}
+const handleInputAChange = (event) => {
+  setInputA(event.target.value);
+};
 
-  const handleInputBChange = (event) => {
-    setInputB(event.target.value);
-  };
-
-  
+const handleInputBChange = (event) => {
+  setInputB(event.target.value);
+};
   const initUser = () => {
     // Check to see if user has Metamask
     if (!ethWallet) {
@@ -140,26 +136,19 @@ export default function HomePage() {
     }
 
     return (
-      <>
-        <div>
-          <p style={{ fontFamily: "Sans-serif" }}>Your Account: {account}</p>
-          <p style={{ fontFamily: "Sans-serif" }}>Your Balance: {balance}</p>
-          <p style={{ fontFamily: "Sans-serif" }}>Owner Name: {ownerName}</p>
-  
-          <button style={{ backgroundColor: "#cyan" }} onClick={deposit}>
-            Deposit 1 ETH
-          </button>
-          <button style={{ backgroundColor: "yellow" }} onClick={withdraw}>
-            Withdraw 1 ETH
-          </button>
-        </div>
-  
-        <div>
-          <h2>Calculator</h2>
+      
+     <div>
+     
+        <p>Your Account: {account}</p>
+        <p>Your Balance: {balance}</p>
+        <button onClick={deposit}>Deposit 1 ETH</button>
+        <button onClick={withdraw}>Withdraw 1 ETH</button>
+        <p style={{ fontFamily: "Sans-serif" }}>Owner Name: {ownerName}</p>
+        <h2 style={{ backgroundColor: "pink" }}>Calculator</h2>
           <p style={{ fontFamily: "Sans-serif" }}>Add: {add ? add.toString() : ""}</p>
           <p style={{ fontFamily: "Sans-serif" }}>Sub: {sub ? sub.toString() : ""}</p>
           <p style={{ fontFamily: "Sans-serif" }}>Multiply: {mult ? mult.toString() : ""}</p>
-
+         
           <input
             type="number"
             placeholder="Enter value A"
@@ -172,36 +161,31 @@ export default function HomePage() {
             value={inputB}
             onChange={handleInputBChange}
           />
-  
-          <button style={{ backgroundColor: "grey" }} onClick={addition}>
+           <button style={{ backgroundColor: "red" }} onClick={addition}>
             Add
           </button>
-          <button style={{ backgroundColor: "grey" }} onClick={subtraction}>
+          <button style={{ backgroundColor: "blue" }} onClick={subtraction}>
             Sub
           </button>
-          <button style={{ backgroundColor: "grey" }} onClick={multiplication}>
+          <button style={{ backgroundColor: "yellow" }} onClick={multiplication}>
             Multiply
           </button>
-        </div>
-      </>
-    );
-    
+      </div>
+    )
   }
 
-  useEffect(() => {
-    getWallet();
-    checkOwner();
-  }, []);
+  useEffect(() => {getWallet();}, []);
 
   return (
     <main className="container">
-      <header><h1>Welcome to the Crypto ATM!</h1></header>
+      <header><h1>Welcome to the Metacrafters ATM!</h1></header>
       {initUser()}
       <style jsx>{`
         .container {
           text-align: center
         }
-        
+        <style>  
+  
       `}
       </style>
     </main>
